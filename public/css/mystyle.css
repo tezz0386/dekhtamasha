@@ -1,0 +1,62 @@
+.nav-font-size{
+	font-size: 20px !important;
+	font-family: sans-serif;
+
+}
+.custom-nav-color{
+	color: white;
+	background-color: red;
+}
+.custom-nav-color a{
+	color: white;
+}
+.custom-nav-color li a:hover{
+    background-color: grey;
+}
+.title{
+	font-size: 18px;
+}
+.comment-box{
+	border-top: none;
+    border-left: none;
+    border-right: none;
+    outline: none;
+}
+.modal-position{
+	top: -90px !important;
+}
+#modal-body label a{
+   color: #30438e !important;
+}
+.label-font-size{
+	font-size: 12px !important;
+}
+.radio-list li{
+	font-size: 18px !important;	
+	font-weight: bold !important;
+}
+
+.mytable td{
+	font-size: 12px;
+}
+
+.my-overlay {
+  height: 25px;
+  opacity: 1;
+  background-color: #0F00BA5C;
+}
+
+.my-overlay a{
+   color: black !important;
+   font-size: 16px;
+}
+
+.like{
+	color: red !important;
+}
+
+
+
+ .dropdown-toggle::after {
+            content: none;
+        }
