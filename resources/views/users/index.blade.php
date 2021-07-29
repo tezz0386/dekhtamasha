@@ -142,7 +142,7 @@
                         <div class="collapse  show " id="laravelExamples">
                             <ul class="nav">
                                 <li class="nav-item ">
-                                    <a class="nav-link" href="{{route('profile.edit')}}">
+                                    <a class="nav-link" href="#">
                                         <i class="nc-icon nc-single-02"></i>
                                         <p>{{ __("User Profile") }}</p>
                                     </a>
@@ -311,7 +311,7 @@
                         </ul>
                         <ul class="navbar-nav   d-flex align-items-center">
                             <li class="nav-item">
-                                <a class="nav-link" href=" {{route('profile.edit') }} ">
+                                <a class="nav-link" href="#">
                                     <span class="no-icon">{{ __('Account') }}</span>
                                 </a>
                             </li>

@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Comment;
 use App\Models\Dislike;
 use App\Models\LikeAssistant;
+use App\Models\Playlist;
 use App\Models\Trace;
 use App\Models\VideoAssistant;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -51,6 +52,10 @@ class Video extends Model
     public function comments()
     {
         return $this->hasMany(Comment::class, 'video_id');
+    }
+    public function playlists()
+    {
+        return $this->belongsTo(Playlist::class, 'playlist_id');
     }
 
 }

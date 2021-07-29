@@ -1,37 +1,37 @@
 @extends('layouts.app', ['activePage' => 'dashboard', 'title' => 'Admin-Video Management', 'navName' => 'Dashboard', 'activeButton' => 'laravel'])
 @section('content')
 <div class="bs-example">
-					<div class="progress">
-										<div class="progress-bar bg-success" style="width: 50%">
-															Details
-										</div>
-										<div class="progress-bar bg-info" style="width: 50%">
-															Publish
-										</div>
-					</div>
+	<div class="progress">
+		<div class="progress-bar bg-success" style="width: 50%">
+			Details
+		</div>
+		<div class="progress-bar bg-info" style="width: 50%">
+			Publish
+		</div>
+	</div>
 </div>
 <div class="container">
-					<h4>Visibility</h4>
-					<div class="card card-body">
-										<ul class="list-unstyled radio-list">
-															<li>
-																				<label><input type="radio" name="visibility" checked="checked" value="1"><b>  Public</b></label>
-															</li>
-															<li>
-																				<label><input type="radio" name="visibility" value="2"><b>  Private</b></label>
-															</li>
-										</ul>
-										<div class="card card-body">
-															<ul class="list-unstyled radio-list">
-																				<li>
-																									<label><input type="radio" name="status" value="1" checked="checked"><b>  Publish Now</b></label>
-																				</li>
-																				<li>
-																									<label><input type="radio" name="status" value="2"><b>  Suspend</b></label>
-																				</li>
-															</ul>
-										</div>
-					</div>
+	<h4>Visibility</h4>
+	<div class="card card-body">
+		<ul class="list-unstyled radio-list">
+			<li>
+				<label><input type="radio" name="visibility" checked="checked" value="1"><b>  Public</b></label>
+			</li>
+			<li>
+				<label><input type="radio" name="visibility" value="2"><b>  Private</b></label>
+			</li>
+		</ul>
+		<div class="card card-body">
+			<ul class="list-unstyled radio-list">
+				<li>
+					<label><input type="radio" name="status" value="1" checked="checked"><b>  Publish Now</b></label>
+				</li>
+				<li>
+					<label><input type="radio" name="status" value="2"><b>  Suspend</b></label>
+				</li>
+			</ul>
+		</div>
+	</div>
 </div>
 <div class="container">
 	<h4>Details</h4>
@@ -111,14 +111,3 @@
 @endsection
 
 
-
-
-@section('scripts')
-  <script type="text/javascript">
-       // $(".js-example-tokenizer").select2({
-       //   dropdownParent: $('#exampleModalCenter'),
-       //   tags: true,
-       //   tokenSeparators: [','],
-       // });
-  </script>
-@endsection

@@ -7,12 +7,14 @@ use App\Models\Comment;
 use App\Models\Dislike;
 use App\Models\Index;
 use App\Models\LikeAssistant;
+use App\Models\Playlist;
 use App\Models\Trace;
 use App\Models\Video;
 use Auth;
 use Illuminate\Http\Request;
 class IndexController extends Controller
 {
+    
     /**
      * Display a listing of the resource.
      *
@@ -22,7 +24,15 @@ class IndexController extends Controller
     {
         //
         $videos = Video::where('status', 1)->where('visibility', 1)->orderByDesc('created_at')->paginate(50);
-        return view('index', ['videos'=>$videos]);
+        return view('index', ['videos'=>$videos, 'playlists'=>$this->getPlaylists(), 'categories'=>$this->getCategories()]);
+    }
+    public function getPlaylists()
+    {
+        return Playlist::select('id', 'title')->get();
+    }
+    public function getCategories()
+    {
+        return Category::select('id', 'title')->limit(3)->get();
     }
 
 
@@ -42,7 +52,7 @@ class IndexController extends Controller
             $video->traces()->save($trace);
             $video->increment('views');
         }
-        return view('watch', ['video'=>$video, 'comments'=>$comments, 'playlistVideos'=>$playlistVideos]);
+        return view('watch', ['video'=>$video, 'comments'=>$comments, 'playlistVideos'=>$playlistVideos, 'playlists'=>$this->getPlaylists(), 'categories'=>$this->getCategories()]);
     }
     public function like(Request $request){
         $likeOutput = '';
@@ -144,10 +154,21 @@ class IndexController extends Controller
     }
 
 
-    public function getMovies()
+    public function getVideoWithCategory($id)
     {
-        $category = Category::where('title', 'Movies')->orderByDesc('created_at')->first();
-        return view('index', ['videos'=>$category->videos, 'title'=>'Dekhtamasha-movies']);
+        $category = Category::find($id);
+        if($category !=null){
+        return view('index', ['videos'=>$category->videos, 'title'=>'Dekhtamasha-movies', 'playlists'=>$this->getPlaylists(), 'categories'=>$this->getCategories()]);
+        }
+        return back();
+    }
+    public function getVideoWithPlaylist($id)
+    {
+        $playlist = Playlist::find($id);
+        if($playlist !=null){
+        return view('index', ['videos'=>$playlist->videos, 'title'=>'Dekhtamasha-movies', 'playlists'=>$this->getPlaylists(), 'categories'=>$this->getCategories()]);
+        }
+        return back();
     }
 
     /**

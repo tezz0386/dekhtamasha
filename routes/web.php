@@ -3,6 +3,7 @@
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\IndexController;
+use App\Http\Controllers\NewsController;
 use App\Http\Controllers\PlaylistController;
 use App\Http\Controllers\VideoController;
 use App\Models\Playlist;
@@ -23,7 +24,8 @@ use Illuminate\Support\Facades\Route;
 //     return view('index', ['title'=>'dekhtamasha']);
 // });
 Route::get('/', [IndexController::class, 'index'])->name('user.getIndex');
-Route::get('/Movies', [IndexController::class, 'getMovies'])->name('user.movies');
+Route::get('/category/{id}', [IndexController::class, 'getVideoWithCategory'])->name('user.getVideoWithCategory');
+Route::get('/playlist/{id}', [IndexController::class, 'getVideoWithPlaylist'])->name('user.getVideoWithPlaylist');
 Route::post('/like', [IndexController::class, 'like'])->name('user.video.like');
 Route::post('/dislike', [IndexController::class, 'dislike'])->name('user.video.dislike');
 Route::post('/comment', [CommentController::class, 'store'])->name('user.comment.store');
@@ -31,7 +33,6 @@ Route::delete('/comment', [CommentController::class, 'destroy'])->name('user.com
 Route::prefix('/watch')->group(function(){
     Route::get('/{token_id}', [IndexController::class, 'getWatch'])->name('user.getWatch');
 });
-
 Auth::routes();
 
 Route::get('/admin/home', [App\Http\Controllers\AdminHomeController::class, 'index'])->middleware('role:2')->name('admin.home');
@@ -43,8 +44,6 @@ Route::group(['middleware' => 'role:2', 'prefix'=>'admin'], function () {
 	Route::get('/', [App\Http\Controllers\AdminHomeController::class, 'index'])->name('admin.home');
 	Route::resource('user', 'App\Http\Controllers\UserController', ['except' => ['show']]);
 	// Route::get('profile', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\ProfileController@edit']);
-
-	
 	// Route::get('/video', ['as' => 'video.create', 'uses' => 'App\Http\Controllers\VideoController@index']);
 	// Route::get('/video/{id}', ['as' => 'video.edit', 'uses' => 'App\Http\Controllers\VideoController@show']);
 

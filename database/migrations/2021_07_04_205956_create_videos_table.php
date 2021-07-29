@@ -28,6 +28,7 @@ class CreateVideosTable extends Migration
             $table->integer('dislike')->default(0);
             $table->integer('visibility');
             $table->integer('status');
+            $table->string('token_id')->unique();
             $table->softDeletes();
             $table->timestamps();
         });

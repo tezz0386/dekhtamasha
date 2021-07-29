@@ -2,7 +2,7 @@
 @section('content')
 <div class="row">
    <div class="col-md-8 col-sm-12 col-12 col-xl-8 col-lg-8">
-      <iframe width="100%" height="315" src="{{$video->url}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+      <iframe width="100%" height="315" src="{{$video->url}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen id="myIframe">
       
       </iframe>
       <label class="title mt-3">
@@ -10,7 +10,7 @@
       </label>
       <br>
       <label>
-         {{$video->views}} Views - 3 jul 2021
+         {{$video->views}} Views - {{$video->created_at->diffForHumans()}}
          <label class="ml-5" style="font-size: 18px;" id="like-label">
             <a href="#" id="like"
                @if(auth()->check())
@@ -41,14 +41,15 @@
       </label>
       <hr style="border-style: dotted none; border-width: 5px; color: black;" class="mt-0">
       <p>
-         {!! substr(strip_tags($video->description),0,500) !!}................
+         {!! substr(strip_tags($video->description),0,50) !!}................
       </p>
       <a  href="#" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
          Show More
       </a>
       <div class="collapse" id="collapseExample">
-         {!! substr($video->description, 500, strlen($video->description)) !!}
+         {!! substr($video->description, 50, strlen($video->description)) !!}
       </div>
+
       <hr style="border-style: dotted none; border-width: 5px; color: black;" class="mt-0">
       <h5>{{count($comments)}} Comments</h5>
       <label>
@@ -65,20 +66,20 @@
          </div>
          <input type="text" class="form-control comment-box" placeholder="Add a public comment" aria-label="Username" aria-describedby="basic-addon1" id="comment" name="comment">
       </div>
-      <button type="button" class="btn btn-primary float-right" id="button-comment" disabled>Comment</button>
-      <button type="button" class="btn btn-info float-right mr-2" id="button-comment-cancel">Cancel</button>
+      <button type="button" class="btn btn-primary float-right mb-2" id="button-comment" disabled>Comment</button>
+      <button type="button" class="btn btn-info float-right mr-2 mb-2" id="button-comment-cancel">Cancel</button>
       <div id="new-comment">
          
       </div>
       @if(isset($comments) && count($comments)>0)
       @foreach($comments as $comment)
-      <div class="comment-div" id="comment-div{{$comment->id}}">
+      <div class="comment-div d-none d-sm-none d-md-block" id="comment-div{{$comment->id}}">
          <div class="input-group mb-3">
             <div class="input-group-prepend">
                <div style="border-radius: 10px; background-color: grey; color: white; font-size: 35px; width: 45px; text-align: center;">{{substr($comment->users->name, 0, 1)}}</div>
             </div>
             <label class="ml-2">
-               <label class="title">{{$comment->users->name}}</label><label class="ml-2">1 week ago</label>
+               <label class="title">{{$comment->users->name}}</label><label class="ml-2">{{$comment->created_at->diffForHumans()}}</label>
                @if(auth()->check())
                @if($comment->users->id == auth()->user()->id)
                <div class="dropdown show float-right">
@@ -99,8 +100,10 @@
       </div>
       @endforeach
       @endif
+
+
    </div>
-   <div class="col-md-4 col-lg-4 col-xl-4 d-sm-none d-md-block d-none d-sm-block ml-0">
+   <div class="col-md-4 col-lg-4 col-xl-4">
       @if($playlistVideos && count($playlistVideos)>0)
       @foreach($playlistVideos as $playlistVideo)
       <a href="{{route('user.getWatch', $playlistVideo->token_id)}}">
@@ -110,7 +113,7 @@
             </div>
             <div class="col-5" style="color: black;">
                <label><b>{{substr($playlistVideo->title, 0, 25)}}</b></label>
-               <label style="font-size: 12px;">{{$playlistVideo->views}} View <br> 6 hours ago</label>
+               <label style="font-size: 12px;">{{$playlistVideo->views}} View <br> {{$playlistVideo->created_at->diffForHumans()}}</label>
             </div>
          </div>
       </a>
@@ -121,4 +124,18 @@
 @endsection
 @section('scripts')
 @include('pages.script')
+<script type="text/javascript">
+  $(document).ready(function(){
+   $(window).resize(function(){
+      if($(window).width() <= 414){
+         $('#myIframe').height(200);
+      }else{
+         $('#myIframe').height(315);
+      }
+   });
+   if($(window).width() <= 414){
+         $('#myIframe').height(200);
+      }
+  });
+</script>
 @endsection

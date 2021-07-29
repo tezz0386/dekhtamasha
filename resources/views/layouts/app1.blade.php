@@ -22,7 +22,7 @@
         <nav class="navbar navbar-expand-md custom-nav-color shadow-sm" >
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
+                    <img src="{{asset('image/logo-icon.png')}}" width="157px;" height="50px;">
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                 <!-- <span class="navbar-toggler-icon"></span> -->
@@ -34,15 +34,13 @@
                         <li class="nav-item">
                             <a href="{{route('user.getIndex')}}" class="nav-link">All Video</a>
                         </li>
+                        @if(isset($categories) && count($categories)>0)
+                        @foreach($categories as $category)
                         <li class="nav-item">
-                            <a href="{{route('user.movies')}}" class="nav-link">Movies</a>
+                            <a href="{{route('user.getVideoWithCategory', $category->id)}}" class="nav-link">{{$category->title}}</a>
                         </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">Documentry</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">News</a>
-                        </li>
+                        @endforeach
+                        @endif
                     </ul>
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto nav-font-size">
@@ -65,10 +63,10 @@
                         @endif
                         @else
                         <li class="nav-item dropdown">
-                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                {{ Auth::user()->name }}
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle bg-primary" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre style="border-radius5px;">
+                                {{ substr(Auth::user()->name, 0, 1) }}
                             </a>
-                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                            <div class="dropdown-menu dropdown-menu-right bg-danger" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="{{ route('logout') }}"
                                     onclick="event.preventDefault();
                                     document.getElementById('logout-form').submit();">
@@ -87,12 +85,14 @@
         <div class="ml-3 mr-3">
             <div class="row">
                 <div class="container-fluid">
-                    <div class="scrolling-wrapper row flex-row flex-nowrap mt-4 pb-4 pt-2">           
-                        @for($i=0; $i<25; $i++)
+                    <div class="scrolling-wrapper row flex-row flex-nowrap mt-4 pb-4 pt-2">    
+                        @if(isset($playlists) && count($playlists)>0)      
+                        @foreach($playlists as $playlist)
                          <div class="col-md-4 col-6 col-lg-4 col-sm-6 col-xs-6 col-xl-3">
-                            <a href="#"><div class="card card-block card-1" style="color:black;"><center>Tharusong</center></div></a>
+                            <a href="{{route('user.getVideoWithPlaylist', $playlist->id)}}"><div class="card card-block card-1" style="color:black;"><center>{{$playlist->title}}</center></div></a>
                         </div>
-                        @endfor
+                        @endforeach
+                        @endif
                     </div>
                 </div>
             </div>
